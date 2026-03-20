@@ -4,69 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>爪痕待办 | Claw Todo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #f8f9fa;
+            --bg-primary: #fafafa;
             --bg-secondary: #ffffff;
+            --bg-card: rgba(255, 255, 255, 0.8);
             --text-primary: #1a1a2e;
-            --text-secondary: #4a4a5a;
-            --text-muted: #8a8a9a;
-            --accent: #2d3436;
-            --accent-glow: rgba(45, 52, 54, 0.1);
-            --claw-mark: #2d3436;
-            --progress-bg: rgba(45, 52, 54, 0.1);
-            --progress-fill: #2d3436;
-            --shadow: rgba(0, 0, 0, 0.05);
-            --danger: #ef4444;
-        }
-
-        .theme-morning {
-            --bg-primary: #f0f9ff;
-            --bg-secondary: #ffffff;
-            --text-primary: #1e3a5f;
-            --text-secondary: #3d6a99;
-            --accent: #2563eb;
-            --accent-glow: rgba(37, 99, 235, 0.1);
-            --claw-mark: #2563eb;
-            --progress-fill: #2563eb;
-        }
-
-        .theme-afternoon {
-            --bg-primary: #fef9f3;
-            --bg-secondary: #fffdf9;
-            --text-primary: #4a3728;
-            --text-secondary: #7a6a5a;
-            --accent: #d97706;
-            --accent-glow: rgba(217, 119, 6, 0.1);
-            --claw-mark: #d97706;
-            --progress-fill: #d97706;
-        }
-
-        .theme-evening {
-            --bg-primary: #1a1a2e;
-            --bg-secondary: #252538;
-            --text-primary: #e8e8f0;
-            --text-secondary: #a8a8b8;
-            --text-muted: #6a6a7a;
+            --text-secondary: #5a5a6a;
+            --text-muted: #9a9aaa;
             --accent: #6366f1;
+            --accent-light: rgba(99, 102, 241, 0.1);
             --accent-glow: rgba(99, 102, 241, 0.15);
-            --claw-mark: #818cf8;
-            --progress-fill: #818cf8;
-            --shadow: rgba(0, 0, 0, 0.2);
+            --claw-mark: #6366f1;
+            --progress-bg: rgba(99, 102, 241, 0.08);
+            --progress-fill: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.12);
+            --radius: 16px;
+            --radius-lg: 24px;
+            --danger: #ef4444;
+            --success: #10b981;
         }
 
+        /* 早晨主题 - 清新透亮 */
+        .theme-morning {
+            --bg-primary: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f9ff 100%);
+            --bg-secondary: rgba(255, 255, 255, 0.9);
+            --text-primary: #0c4a6e;
+            --text-secondary: #0369a1;
+            --accent: #0ea5e9;
+            --accent-light: rgba(14, 165, 233, 0.1);
+            --accent-glow: rgba(14, 165, 233, 0.2);
+            --claw-mark: #0ea5e9;
+            --progress-bg: rgba(14, 165, 233, 0.1);
+            --progress-fill: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+        }
+
+        /* 午后主题 - 暖黄沉稳 */
+        .theme-afternoon {
+            --bg-primary: linear-gradient(135deg, #fefce8 0%, #fef3c7 50%, #fefce8 100%);
+            --bg-secondary: rgba(255, 255, 255, 0.95);
+            --text-primary: #78350f;
+            --text-secondary: #a16207;
+            --accent: #f59e0b;
+            --accent-light: rgba(245, 158, 11, 0.1);
+            --accent-glow: rgba(245, 158, 11, 0.2);
+            --claw-mark: #f59e0b;
+            --progress-bg: rgba(245, 158, 11, 0.1);
+            --progress-fill: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+        }
+
+        /* 晚间主题 - 暗色护眼 */
+        .theme-evening {
+            --bg-primary: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+            --bg-secondary: rgba(49, 46, 129, 0.5);
+            --bg-card: rgba(49, 46, 129, 0.3);
+            --text-primary: #e0e7ff;
+            --text-secondary: #a5b4fc;
+            --text-muted: #6366f1;
+            --accent: #a78bfa;
+            --accent-light: rgba(167, 139, 250, 0.15);
+            --accent-glow: rgba(167, 139, 250, 0.25);
+            --claw-mark: #a78bfa;
+            --progress-bg: rgba(167, 139, 250, 0.15);
+            --progress-fill: linear-gradient(135deg, #a78bfa 0%, #c4b5fd 100%);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 深夜主题 - 休息 */
         .theme-night {
-            --bg-primary: #0f0f1a;
-            --bg-secondary: #1a1a28;
-            --text-primary: #5a5a7a;
+            --bg-primary: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
+            --bg-secondary: rgba(26, 26, 46, 0.8);
+            --text-primary: #4a4a6a;
             --text-secondary: #3a3a5a;
             --text-muted: #2a2a4a;
             --accent: #4a4a6a;
-            --accent-glow: rgba(74, 74, 106, 0.1);
-            --claw-mark: #5a5a7a;
-            --progress-fill: #4a4a6a;
-            --shadow: rgba(0, 0, 0, 0.3);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
         }
 
         * {
@@ -76,137 +92,227 @@
         }
 
         body {
-            font-family: 'Noto Sans SC', -apple-system, sans-serif;
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            transition: background 0.8s ease, color 0.8s ease;
+            transition: background 1s ease, color 0.6s ease;
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 40px 24px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .time-indicator {
+        .bg-decoration {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: var(--progress-bg);
-            z-index: 100;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
         }
 
-        .time-indicator::after {
+        .bg-decoration::before {
             content: '';
             position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: var(--time-progress, 0%);
-            background: var(--progress-fill);
-            transition: width 1s ease;
+            width: 600px;
+            height: 600px;
+            background: var(--accent-glow);
+            border-radius: 50%;
+            filter: blur(80px);
+            top: -200px;
+            right: -100px;
+            opacity: 0.6;
+            animation: float 20s ease-in-out infinite;
         }
 
+        .bg-decoration::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: var(--accent-light);
+            border-radius: 50%;
+            filter: blur(60px);
+            bottom: -100px;
+            left: -50px;
+            opacity: 0.4;
+            animation: float 15s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 20px) scale(1.05); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        /* 头部 */
         .header {
-            margin-bottom: 32px;
-            animation: fadeIn 0.6s ease;
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 0.8s ease;
+        }
+
+        .date-display {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
         }
 
         .greeting {
-            font-size: 28px;
+            font-size: 36px;
             font-weight: 700;
-            margin-bottom: 6px;
-            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: var(--progress-fill);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .time-message {
-            font-size: 16px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        /* 进度卡片 */
+        .progress-card {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-md);
+            animation: slideUp 0.8s ease 0.1s both;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            font-weight: 500;
             color: var(--text-secondary);
         }
 
-        .add-task {
-            margin-bottom: 32px;
-            animation: fadeIn 0.6s ease 0.1s both;
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
+        .progress-count {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
         }
 
-        .add-task input[type="text"] {
-            flex: 1;
-            min-width: 200px;
-            padding: 16px 20px;
+        .progress-count span {
             font-size: 16px;
-            border: none;
-            border-radius: 12px;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            box-shadow: 0 2px 16px var(--shadow);
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .add-task input[type="date"] {
-            padding: 16px 16px;
-            font-size: 14px;
-            border: none;
-            border-radius: 12px;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            box-shadow: 0 2px 16px var(--shadow);
-            outline: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .add-task input[type="text"]:focus,
-        .add-task input[type="date"]:focus {
-            box-shadow: 0 4px 24px var(--accent-glow), 0 2px 16px var(--shadow);
-            transform: translateY(-2px);
-        }
-
-        .add-task input::placeholder {
+            font-weight: 400;
             color: var(--text-muted);
         }
 
+        .progress-bar {
+            height: 8px;
+            background: var(--progress-bg);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--progress-fill);
+            border-radius: 4px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .encouragement {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 500;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.4s ease;
+        }
+
+        .encouragement.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* 任务列表 */
         .task-list {
-            flex: 1;
             margin-bottom: 32px;
         }
 
         .task-section {
             margin-bottom: 28px;
-            animation: fadeIn 0.6s ease 0.2s both;
+            animation: slideUp 0.8s ease 0.2s both;
         }
 
         .section-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            padding: 0 4px;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding-left: 4px;
+        }
+
+        .section-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
         }
 
         .section-title {
             font-size: 13px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
         }
 
         .section-count {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
             background: var(--progress-bg);
             padding: 2px 8px;
             border-radius: 10px;
+            font-weight: 500;
         }
 
         .task-item {
@@ -215,37 +321,64 @@
             gap: 14px;
             padding: 16px 18px;
             background: var(--bg-secondary);
-            border-radius: 12px;
-            margin-bottom: 8px;
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            margin-bottom: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .task-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
         }
 
         .task-item:hover {
-            transform: translateX(4px);
-            box-shadow: 0 4px 16px var(--shadow);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .task-item:hover::before {
+            transform: scaleY(1);
         }
 
         .task-item.completed {
-            opacity: 0.5;
+            opacity: 0.6;
+        }
+
+        .task-item.completed::before {
+            background: var(--success);
+            transform: scaleY(1);
         }
 
         .claw-icon {
-            width: 22px;
-            height: 22px;
+            width: 26px;
+            height: 26px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 50%;
+            background: var(--progress-bg);
             color: var(--text-muted);
-            font-size: 18px;
+            font-size: 12px;
+            font-weight: 600;
             transition: all 0.3s ease;
         }
 
         .task-item.completed .claw-icon {
-            color: var(--accent);
+            background: var(--success);
+            color: white;
         }
 
         .task-content {
@@ -254,10 +387,11 @@
         }
 
         .task-text {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 500;
             position: relative;
             display: inline-block;
+            transition: color 0.3s ease;
         }
 
         .task-item.completed .task-text {
@@ -273,6 +407,7 @@
             background: var(--claw-mark);
             transform: translateY(-50%);
             transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 1px;
         }
 
         .task-item.completed .claw-strike {
@@ -283,193 +418,113 @@
             font-size: 12px;
             color: var(--text-muted);
             margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .task-date.overdue {
             color: var(--danger);
         }
 
-        .task-delete {
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            color: var(--text-muted);
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.2s ease;
-            font-size: 18px;
+        .task-date .date-icon {
+            font-size: 10px;
         }
 
-        .task-item:hover .task-delete {
-            opacity: 1;
-        }
-
-        .task-delete:hover {
-            background: var(--danger);
-            color: white;
-        }
-
-        .progress-section {
-            padding: 20px;
-            background: var(--bg-secondary);
-            border-radius: 14px;
-            animation: fadeIn 0.6s ease 0.3s both;
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-        }
-
-        .progress-title {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .progress-count {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: var(--progress-bg);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 14px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--progress-fill);
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
-
-        .claw-prints {
-            display: flex;
-            gap: 6px;
-            justify-content: center;
-        }
-
-        .claw-print {
-            width: 10px;
-            height: 10px;
-            opacity: 0.2;
-            transition: all 0.3s ease;
-        }
-
-        .claw-print.active {
-            opacity: 1;
-            transform: scale(1.15);
-        }
-
-        .claw-print svg {
-            width: 100%;
-            height: 100%;
-            fill: var(--progress-fill);
-        }
-
-        .encouragement {
-            text-align: center;
-            padding: 14px;
-            font-size: 15px;
-            color: var(--accent);
-            font-weight: 500;
-            opacity: 0;
-            transform: translateY(8px);
-            transition: all 0.4s ease;
-        }
-
-        .encouragement.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        /* 休息模式 */
         .rest-mode {
             text-align: center;
-            padding: 50px 20px;
-            animation: fadeIn 0.6s ease;
+            padding: 60px 20px;
+            animation: fadeIn 1s ease;
         }
 
-        .rest-mode .moon {
-            font-size: 56px;
-            margin-bottom: 20px;
-            opacity: 0.6;
+        .rest-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+            opacity: 0.7;
+            animation: pulse 3s ease-in-out infinite;
         }
 
-        .rest-mode .rest-message {
-            font-size: 22px;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        .rest-message {
+            font-size: 24px;
+            font-weight: 600;
             color: var(--text-secondary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
-        .rest-mode .rest-sub {
-            font-size: 15px;
+        .rest-sub {
+            font-size: 14px;
             color: var(--text-muted);
         }
 
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 20px;
             color: var(--text-muted);
+            font-size: 15px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        /* 动画 */
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* 响应式 */
         @media (max-width: 600px) {
-            .container { padding: 32px 16px; }
-            .greeting { font-size: 24px; }
-            .add-task { flex-direction: column; }
-            .add-task input[type="text"] { min-width: 100%; }
-            .task-text { font-size: 15px; }
+            .container { padding: 24px 16px; }
+            .greeting { font-size: 28px; }
+            .progress-card { padding: 20px; }
+            .task-text { font-size: 14px; }
         }
     </style>
 </head>
 <body>
-    <div class="time-indicator"></div>
+    <div class="bg-decoration"></div>
     
     <div class="container">
         <header class="header">
+            <div class="date-display" id="date-display">2026年3月20日 · 周五</div>
             <h1 class="greeting" id="greeting">早安</h1>
             <p class="time-message" id="time-message">清晨的猎物，先捕获最重要的三件事</p>
         </header>
 
-        <div class="add-task">
-            <input type="text" id="new-task" placeholder="添加新任务，回车确认" autocomplete="off">
-            <input type="date" id="task-date">
-        </div>
-
-        <main class="task-list" id="task-list"></main>
-
-        <footer class="progress-section" id="progress-section">
+        <div class="progress-card" id="progress-card">
             <div class="progress-header">
-                <span class="progress-title">今日进度</span>
-                <span class="progress-count" id="progress-count">0/0</span>
+                <span class="progress-label">今日完成</span>
+                <div class="progress-count"><span id="completed-count">0</span><span> / <span id="total-count">0</span></span></div>
             </div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
             </div>
-            <div class="claw-prints" id="claw-prints"></div>
-            <div class="encouragement" id="encouragement">今日领地，已标记完毕 🐾</div>
-        </footer>
+            <div class="encouragement" id="encouragement">✨ 完美！今日领地已标记完毕</div>
+        </div>
+
+        <main class="task-list" id="task-list"></main>
     </div>
 
     <script>
         // 初始任务数据
         const defaultTasks = [
-            { id: 1, text: '每周六给女方父母打电话', completed: false, date: '2026-03-21', repeat: 'weekly-sat' },
-            { id: 2, text: '每周日给自己父母打电话', completed: false, date: '2026-03-22', repeat: 'weekly-sun' },
+            { id: 1, text: '给女方父母打电话', completed: false, date: '2026-03-21', repeat: 'weekly-sat' },
+            { id: 2, text: '给自己父母打电话', completed: false, date: '2026-03-22', repeat: 'weekly-sun' },
             { id: 3, text: '领取马拉松物资', completed: false, date: '2026-03-21' },
-            { id: 4, text: '再次预约确认网线事宜', completed: false, date: '2026-03-21' },
+            { id: 4, text: '确认网线事宜', completed: false, date: '2026-03-21' },
             { id: 5, text: '入住酒店（半马赛前）', completed: false, date: '2026-03-21' },
             { id: 6, text: '第十三章直播课程', completed: false, date: '2026-03-21' },
         ];
@@ -482,32 +537,6 @@
             if (hour >= 12 && hour < 18) return { theme: 'afternoon', greeting: '午安', message: '午后专注，别让待办溜走' };
             if (hour >= 18 && hour < 22) return { theme: 'evening', greeting: '晚上好', message: '复盘今日，清空大脑' };
             return { theme: 'night', greeting: '夜深了', message: '明天的爪子会更锋利，先睡吧' };
-        }
-
-        function updateTimeTheme() {
-            const { theme, greeting, message } = getTimeTheme();
-            document.body.className = `theme-${theme}`;
-            document.getElementById('greeting').textContent = greeting;
-            document.getElementById('time-message').textContent = message;
-            
-            const now = new Date();
-            const progress = ((now.getHours() + now.getMinutes() / 60) / 24) * 100;
-            document.documentElement.style.setProperty('--time-progress', `${progress}%`);
-            
-            const isNight = theme === 'night';
-            document.getElementById('task-list').style.display = isNight ? 'none' : 'block';
-            document.getElementById('progress-section').style.display = isNight ? 'none' : 'block';
-            document.querySelector('.add-task').style.display = isNight ? 'none' : 'flex';
-            
-            let restDiv = document.getElementById('rest-mode');
-            if (isNight && !restDiv) {
-                restDiv = document.createElement('div');
-                restDiv.id = 'rest-mode';
-                restDiv.className = 'rest-mode';
-                restDiv.innerHTML = `<div class="moon">🌙</div><div class="rest-message">明天的爪子会更锋利</div><div class="rest-sub">先休息吧，任务会等着你的</div>`;
-                document.querySelector('.container').insertBefore(restDiv, document.getElementById('progress-section'));
-            }
-            if (restDiv) restDiv.style.display = isNight ? 'block' : 'none';
         }
 
         function formatDate(dateStr) {
@@ -538,6 +567,34 @@
             return taskDate < today;
         }
 
+        function updateDateDisplay() {
+            const now = new Date();
+            const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+            const dateStr = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 · ${weekdays[now.getDay()]}`;
+            document.getElementById('date-display').textContent = dateStr;
+        }
+
+        function updateTimeTheme() {
+            const { theme, greeting, message } = getTimeTheme();
+            document.body.className = `theme-${theme}`;
+            document.getElementById('greeting').textContent = greeting;
+            document.getElementById('time-message').textContent = message;
+            
+            const isNight = theme === 'night';
+            document.getElementById('task-list').style.display = isNight ? 'none' : 'block';
+            document.getElementById('progress-card').style.display = isNight ? 'none' : 'block';
+            
+            let restDiv = document.getElementById('rest-mode');
+            if (isNight && !restDiv) {
+                restDiv = document.createElement('div');
+                restDiv.id = 'rest-mode';
+                restDiv.className = 'rest-mode';
+                restDiv.innerHTML = `<div class="rest-icon">🌙</div><div class="rest-message">明天的爪子会更锋利</div><div class="rest-sub">先休息吧，任务会等着你的</div>`;
+                document.querySelector('.container').appendChild(restDiv);
+            }
+            if (restDiv) restDiv.style.display = isNight ? 'block' : 'none';
+        }
+
         function saveTasks() {
             localStorage.setItem('claw-tasks', JSON.stringify(tasks));
         }
@@ -548,7 +605,6 @@
             
             const todayTasks = tasks.filter(t => t.date === today && !t.completed);
             const upcomingTasks = tasks.filter(t => t.date && t.date !== today && !t.completed);
-            const noDateTasks = tasks.filter(t => !t.date && !t.completed);
             const completedTasks = tasks.filter(t => t.completed);
             
             let html = '';
@@ -556,6 +612,7 @@
             if (todayTasks.length > 0) {
                 html += `<div class="task-section">
                     <div class="section-header">
+                        <span class="section-icon">🎯</span>
                         <span class="section-title">今天</span>
                         <span class="section-count">${todayTasks.length}</span>
                     </div>
@@ -567,6 +624,7 @@
                 const sorted = [...upcomingTasks].sort((a, b) => new Date(a.date) - new Date(b.date));
                 html += `<div class="task-section">
                     <div class="section-header">
+                        <span class="section-icon">📅</span>
                         <span class="section-title">即将到来</span>
                         <span class="section-count">${upcomingTasks.length}</span>
                     </div>
@@ -574,28 +632,19 @@
                 </div>`;
             }
             
-            if (noDateTasks.length > 0) {
-                html += `<div class="task-section">
-                    <div class="section-header">
-                        <span class="section-title">待安排</span>
-                        <span class="section-count">${noDateTasks.length}</span>
-                    </div>
-                    ${noDateTasks.map(t => renderTask(t)).join('')}
-                </div>`;
-            }
-            
             if (completedTasks.length > 0) {
                 html += `<div class="task-section">
                     <div class="section-header">
+                        <span class="section-icon">✅</span>
                         <span class="section-title">已完成</span>
                         <span class="section-count">${completedTasks.length}</span>
                     </div>
-                    ${completedTasks.map(t => renderTask(t)).join('')}
+                    ${completedTasks.slice(0, 5).map(t => renderTask(t)).join('')}
                 </div>`;
             }
             
             if (tasks.length === 0) {
-                html = `<div class="empty-state">还没有任务，添加一个吧 ✨</div>`;
+                html = `<div class="empty-state">✨ 暂无任务</div>`;
             }
             
             taskList.innerHTML = html;
@@ -608,15 +657,14 @@
             
             return `
                 <div class="task-item ${task.completed ? 'completed' : ''}" data-id="${task.id}">
-                    <div class="claw-icon">${task.completed ? '✓' : '○'}</div>
+                    <div class="claw-icon">${task.completed ? '✓' : ''}</div>
                     <div class="task-content">
                         <div class="task-text">
                             ${escapeHtml(task.text)}
                             <div class="claw-strike"></div>
                         </div>
-                        ${dateDisplay ? `<div class="task-date ${overdue ? 'overdue' : ''}">${dateDisplay}</div>` : ''}
+                        ${dateDisplay ? `<div class="task-date ${overdue ? 'overdue' : ''}"><span class="date-icon">📆</span>${dateDisplay}</div>` : ''}
                     </div>
-                    <div class="task-delete" onclick="event.stopPropagation(); deleteTask(${task.id})">×</div>
                 </div>
             `;
         }
@@ -625,18 +673,6 @@
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
-        }
-
-        function addTask(text, date) {
-            if (!text.trim()) return;
-            tasks.unshift({
-                id: Date.now(),
-                text: text.trim(),
-                completed: false,
-                date: date || null
-            });
-            saveTasks();
-            renderTasks();
         }
 
         function toggleTask(id) {
@@ -648,12 +684,6 @@
             }
         }
 
-        function deleteTask(id) {
-            tasks = tasks.filter(t => t.id !== id);
-            saveTasks();
-            renderTasks();
-        }
-
         function updateProgress() {
             const today = new Date().toISOString().split('T')[0];
             const todayTasks = tasks.filter(t => t.date === today);
@@ -661,17 +691,9 @@
             const completed = todayTasks.filter(t => t.completed).length;
             const percentage = total > 0 ? (completed / total) * 100 : 0;
             
-            document.getElementById('progress-count').textContent = `${completed}/${total}`;
+            document.getElementById('completed-count').textContent = completed;
+            document.getElementById('total-count').textContent = total;
             document.getElementById('progress-fill').style.width = `${percentage}%`;
-            
-            const clawPrints = document.getElementById('claw-prints');
-            let printsHtml = '';
-            for (let i = 0; i < Math.max(total, 5); i++) {
-                printsHtml += `<div class="claw-print ${i < completed ? 'active' : ''}">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.5 4 7.5 6.5C7.5 7.5 7.8 8.3 8.3 9L6 12L3.5 10.5C3 10.2 2.4 10.4 2.1 10.9C1.8 11.4 2 12 2.5 12.3L5 13.8L4 16.5C3.8 17 4.1 17.6 4.6 17.8C5.1 18 5.7 17.7 5.9 17.2L7 14L9 15L9.5 18.5C9.6 19 10 19.4 10.5 19.4H13.5C14 19.4 14.4 19 14.5 18.5L15 15L17 14L18.1 17.2C18.3 17.7 18.9 18 19.4 17.8C19.9 17.6 20.2 17 20 16.5L19 13.8L21.5 12.3C22 12 22.2 11.4 21.9 10.9C21.6 10.4 21 10.2 20.5 10.5L18 12L15.7 9C16.2 8.3 16.5 7.5 16.5 6.5C16.5 4 14.5 2 12 2Z"/></svg>
-                </div>`;
-            }
-            clawPrints.innerHTML = printsHtml;
             
             const encouragement = document.getElementById('encouragement');
             if (total > 0 && completed === total) {
@@ -682,26 +704,15 @@
         }
 
         // 事件监听
-        document.getElementById('new-task').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const date = document.getElementById('task-date').value;
-                addTask(e.target.value, date);
-                e.target.value = '';
-                document.getElementById('task-date').value = '';
-            }
-        });
-
         document.getElementById('task-list').addEventListener('click', (e) => {
             const taskItem = e.target.closest('.task-item');
-            if (taskItem && !e.target.classList.contains('task-delete')) {
+            if (taskItem) {
                 toggleTask(parseInt(taskItem.dataset.id));
             }
         });
 
-        // 设置默认日期为今天
-        document.getElementById('task-date').value = new Date().toISOString().split('T')[0];
-
         // 初始化
+        updateDateDisplay();
         updateTimeTheme();
         renderTasks();
         setInterval(updateTimeTheme, 60000);
