@@ -285,6 +285,28 @@
             margin-bottom: 32px;
         }
 
+        /* 标签样式 */
+        .task-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .task-tag.work {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+        }
+
+        .task-tag.life {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            color: white;
+        }
+
         .task-section {
             margin-bottom: 28px;
             animation: slideUp 0.8s ease 0.2s both;
@@ -675,13 +697,14 @@
         function renderTask(task) {
             const dateDisplay = task.date ? formatDate(task.date) : '';
             const overdue = !task.completed && isOverdue(task.date);
+            const tagDisplay = task.tag ? `<span class="task-tag ${task.tag}">${task.tag === 'work' ? '工作' : '生活'}</span>` : '';
             
             return `
                 <div class="task-item ${task.completed ? 'completed' : ''}" data-id="${task.id}">
                     <div class="claw-icon">${task.completed ? '✓' : ''}</div>
                     <div class="task-content">
                         <div class="task-text">
-                            ${escapeHtml(task.text)}
+                            ${tagDisplay}${escapeHtml(task.text)}
                             <div class="claw-strike"></div>
                         </div>
                         ${dateDisplay ? `<div class="task-date ${overdue ? 'overdue' : ''}"><span class="date-icon">📆</span>${dateDisplay}</div>` : ''}
