@@ -180,6 +180,15 @@
             background-clip: text;
         }
 
+        .brand-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 4px;
+            margin-bottom: 12px;
+            opacity: 0.8;
+        }
+
         .time-message {
             font-size: 15px;
             color: var(--text-secondary);
@@ -501,6 +510,7 @@
         <header class="header">
             <div class="date-display" id="date-display">2026年3月20日 · 周五</div>
             <h1 class="greeting" id="greeting">早安</h1>
+            <div class="brand-title">🐾 爪痕待办</div>
             <p class="time-message" id="time-message">清晨的猎物，先捕获最重要的三件事</p>
         </header>
 
@@ -519,17 +529,32 @@
     </div>
 
     <script>
-        // 初始任务数据
-        const defaultTasks = [
-            { id: 1, text: '给女方父母打电话', completed: false, date: '2026-03-21', repeat: 'weekly-sat' },
-            { id: 2, text: '给自己父母打电话', completed: false, date: '2026-03-22', repeat: 'weekly-sun' },
-            { id: 3, text: '领取马拉松物资', completed: false, date: '2026-03-21' },
-            { id: 4, text: '确认网线事宜', completed: false, date: '2026-03-21' },
-            { id: 5, text: '入住酒店（半马赛前）', completed: false, date: '2026-03-21' },
-            { id: 6, text: '第十三章直播课程', completed: false, date: '2026-03-21' },
-        ];
-
-        let tasks = JSON.parse(localStorage.getItem('claw-tasks') || 'null') || defaultTasks;
+        // 任务数据 - 从todos.json加载
+        let tasks = [];
+        
+        async function loadTasks() {
+            try {
+                const response = await fetch('todos.json');
+                tasks = await response.json();
+                const saved = localStorage.getItem('claw-tasks-completed');
+                if (saved) {
+                    const completed = JSON.parse(saved);
+                    tasks.forEach(t => {
+                        if (completed.includes(t.id)) t.completed = true;
+                    });
+                }
+                renderTasks();
+            } catch (e) {
+                console.error('加载任务失败', e);
+            }
+        }
+        
+        function saveTasks() {
+            const completed = tasks.filter(t => t.completed).map(t => t.id);
+            localStorage.setItem('claw-tasks-completed', JSON.stringify(completed));
+        }
+        
+        loadTasks();
         
         function getTimeTheme() {
             const hour = new Date().getHours();
@@ -593,10 +618,6 @@
                 document.querySelector('.container').appendChild(restDiv);
             }
             if (restDiv) restDiv.style.display = isNight ? 'block' : 'none';
-        }
-
-        function saveTasks() {
-            localStorage.setItem('claw-tasks', JSON.stringify(tasks));
         }
 
         function renderTasks() {
