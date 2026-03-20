@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 默认主题 - 会根据时间动态变化 */
             --bg-primary: #f8f9fa;
             --bg-secondary: #ffffff;
             --text-primary: #1a1a2e;
@@ -19,9 +18,9 @@
             --progress-bg: rgba(45, 52, 54, 0.1);
             --progress-fill: #2d3436;
             --shadow: rgba(0, 0, 0, 0.05);
+            --danger: #ef4444;
         }
 
-        /* 早晨主题 - 清新透亮 */
         .theme-morning {
             --bg-primary: #f0f9ff;
             --bg-secondary: #ffffff;
@@ -33,7 +32,6 @@
             --progress-fill: #2563eb;
         }
 
-        /* 午后主题 - 暖黄沉稳 */
         .theme-afternoon {
             --bg-primary: #fef9f3;
             --bg-secondary: #fffdf9;
@@ -45,7 +43,6 @@
             --progress-fill: #d97706;
         }
 
-        /* 晚间主题 - 暗色护眼 */
         .theme-evening {
             --bg-primary: #1a1a2e;
             --bg-secondary: #252538;
@@ -59,7 +56,6 @@
             --shadow: rgba(0, 0, 0, 0.2);
         }
 
-        /* 深夜主题 - 休息 */
         .theme-night {
             --bg-primary: #0f0f1a;
             --bg-secondary: #1a1a28;
@@ -89,15 +85,14 @@
         }
 
         .container {
-            max-width: 680px;
+            max-width: 720px;
             margin: 0 auto;
-            padding: 60px 24px;
+            padding: 40px 24px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* 时间轴指示器 */
         .time-indicator {
             position: fixed;
             top: 0;
@@ -119,62 +114,84 @@
             transition: width 1s ease;
         }
 
-        /* 头部 */
         .header {
-            margin-bottom: 48px;
+            margin-bottom: 32px;
             animation: fadeIn 0.6s ease;
         }
 
         .greeting {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             letter-spacing: -0.5px;
         }
 
         .time-message {
-            font-size: 18px;
+            font-size: 16px;
             color: var(--text-secondary);
-            font-weight: 400;
         }
 
-        /* 添加任务 */
         .add-task {
-            margin-bottom: 40px;
+            margin-bottom: 32px;
             animation: fadeIn 0.6s ease 0.1s both;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
-        .add-task input {
-            width: 100%;
-            padding: 20px 24px;
-            font-size: 18px;
+        .add-task input[type="text"] {
+            flex: 1;
+            min-width: 200px;
+            padding: 16px 20px;
+            font-size: 16px;
             border: none;
-            border-radius: 16px;
+            border-radius: 12px;
             background: var(--bg-secondary);
             color: var(--text-primary);
-            box-shadow: 0 2px 20px var(--shadow);
+            box-shadow: 0 2px 16px var(--shadow);
             outline: none;
             transition: all 0.3s ease;
+        }
+
+        .add-task input[type="date"] {
+            padding: 16px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            box-shadow: 0 2px 16px var(--shadow);
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-task input[type="text"]:focus,
+        .add-task input[type="date"]:focus {
+            box-shadow: 0 4px 24px var(--accent-glow), 0 2px 16px var(--shadow);
+            transform: translateY(-2px);
         }
 
         .add-task input::placeholder {
             color: var(--text-muted);
         }
 
-        .add-task input:focus {
-            box-shadow: 0 4px 30px var(--accent-glow), 0 2px 20px var(--shadow);
-            transform: translateY(-2px);
-        }
-
-        /* 任务列表 */
         .task-list {
             flex: 1;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
 
         .task-section {
-            margin-bottom: 32px;
+            margin-bottom: 28px;
             animation: fadeIn 0.6s ease 0.2s both;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 0 4px;
         }
 
         .section-title {
@@ -182,18 +199,24 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
-            margin-bottom: 16px;
-            padding-left: 4px;
+        }
+
+        .section-count {
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--progress-bg);
+            padding: 2px 8px;
+            border-radius: 10px;
         }
 
         .task-item {
             display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            padding: 18px 20px;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 18px;
             background: var(--bg-secondary);
             border-radius: 12px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
@@ -202,50 +225,45 @@
 
         .task-item:hover {
             transform: translateX(4px);
-            box-shadow: 0 4px 20px var(--shadow);
+            box-shadow: 0 4px 16px var(--shadow);
         }
 
         .task-item.completed {
             opacity: 0.5;
         }
 
-        /* 爪痕图标 */
         .claw-icon {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-muted);
+            font-size: 18px;
             transition: all 0.3s ease;
-            position: relative;
         }
 
-        .claw-icon::before {
-            content: '○';
-            font-size: 20px;
-        }
-
-        .task-item.completed .claw-icon::before {
-            content: '✓';
+        .task-item.completed .claw-icon {
             color: var(--accent);
         }
 
-        /* 爪痕划线效果 */
-        .task-text {
+        .task-content {
             flex: 1;
-            font-size: 18px;
+            min-width: 0;
+        }
+
+        .task-text {
+            font-size: 16px;
             font-weight: 500;
             position: relative;
-            padding: 2px 0;
+            display: inline-block;
         }
 
         .task-item.completed .task-text {
             color: var(--text-muted);
         }
 
-        /* 爪痕划线 */
         .claw-strike {
             position: absolute;
             left: 0;
@@ -261,11 +279,43 @@
             width: 100%;
         }
 
-        /* 进度条 */
+        .task-date {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .task-date.overdue {
+            color: var(--danger);
+        }
+
+        .task-delete {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            color: var(--text-muted);
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.2s ease;
+            font-size: 18px;
+        }
+
+        .task-item:hover .task-delete {
+            opacity: 1;
+        }
+
+        .task-delete:hover {
+            background: var(--danger);
+            color: white;
+        }
+
         .progress-section {
-            padding: 24px;
+            padding: 20px;
             background: var(--bg-secondary);
-            border-radius: 16px;
+            border-radius: 14px;
             animation: fadeIn 0.6s ease 0.3s both;
         }
 
@@ -273,7 +323,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .progress-title {
@@ -291,7 +341,7 @@
             background: var(--progress-bg);
             border-radius: 4px;
             overflow: hidden;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .progress-fill {
@@ -299,26 +349,24 @@
             background: var(--progress-fill);
             border-radius: 4px;
             transition: width 0.5s ease;
-            position: relative;
         }
 
-        /* 爪印进度 */
         .claw-prints {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             justify-content: center;
         }
 
         .claw-print {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             opacity: 0.2;
             transition: all 0.3s ease;
         }
 
         .claw-print.active {
             opacity: 1;
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
 
         .claw-print svg {
@@ -327,15 +375,14 @@
             fill: var(--progress-fill);
         }
 
-        /* 完成鼓励 */
         .encouragement {
             text-align: center;
-            padding: 16px;
-            font-size: 16px;
+            padding: 14px;
+            font-size: 15px;
             color: var(--accent);
             font-weight: 500;
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(8px);
             transition: all 0.4s ease;
         }
 
@@ -344,60 +391,46 @@
             transform: translateY(0);
         }
 
-        /* 深夜休息模式 */
         .rest-mode {
             text-align: center;
-            padding: 60px 20px;
+            padding: 50px 20px;
             animation: fadeIn 0.6s ease;
         }
 
         .rest-mode .moon {
-            font-size: 64px;
-            margin-bottom: 24px;
+            font-size: 56px;
+            margin-bottom: 20px;
             opacity: 0.6;
         }
 
         .rest-mode .rest-message {
-            font-size: 24px;
+            font-size: 22px;
             color: var(--text-secondary);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .rest-mode .rest-sub {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text-muted);
         }
 
-        /* 动画 */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
         }
 
-        /* 响应式 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 600px) {
-            .container {
-                padding: 40px 16px;
-            }
-            .greeting {
-                font-size: 26px;
-            }
-            .time-message {
-                font-size: 16px;
-            }
-            .add-task input {
-                padding: 16px 20px;
-                font-size: 16px;
-            }
-            .task-text {
-                font-size: 16px;
-            }
+            .container { padding: 32px 16px; }
+            .greeting { font-size: 24px; }
+            .add-task { flex-direction: column; }
+            .add-task input[type="text"] { min-width: 100%; }
+            .task-text { font-size: 15px; }
         }
     </style>
 </head>
@@ -412,11 +445,10 @@
 
         <div class="add-task">
             <input type="text" id="new-task" placeholder="添加新任务，回车确认" autocomplete="off">
+            <input type="date" id="task-date">
         </div>
 
-        <main class="task-list" id="task-list">
-            <!-- 任务会动态渲染 -->
-        </main>
+        <main class="task-list" id="task-list"></main>
 
         <footer class="progress-section" id="progress-section">
             <div class="progress-header">
@@ -426,18 +458,24 @@
             <div class="progress-bar">
                 <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
             </div>
-            <div class="claw-prints" id="claw-prints">
-                <!-- 爪印会动态渲染 -->
-            </div>
-            <div class="encouragement" id="encouragement">今日领地，已标记完毕</div>
+            <div class="claw-prints" id="claw-prints"></div>
+            <div class="encouragement" id="encouragement">今日领地，已标记完毕 🐾</div>
         </footer>
     </div>
 
     <script>
-        // 待办数据
-        let tasks = JSON.parse(localStorage.getItem('claw-tasks') || '[]');
+        // 初始任务数据
+        const defaultTasks = [
+            { id: 1, text: '每周六给女方父母打电话', completed: false, date: '2026-03-21', repeat: 'weekly-sat' },
+            { id: 2, text: '每周日给自己父母打电话', completed: false, date: '2026-03-22', repeat: 'weekly-sun' },
+            { id: 3, text: '领取马拉松物资', completed: false, date: '2026-03-21' },
+            { id: 4, text: '再次预约确认网线事宜', completed: false, date: '2026-03-21' },
+            { id: 5, text: '入住酒店（半马赛前）', completed: false, date: '2026-03-21' },
+            { id: 6, text: '第十三章直播课程', completed: false, date: '2026-03-21' },
+        ];
+
+        let tasks = JSON.parse(localStorage.getItem('claw-tasks') || 'null') || defaultTasks;
         
-        // 时间感知
         function getTimeTheme() {
             const hour = new Date().getHours();
             if (hour >= 5 && hour < 12) return { theme: 'morning', greeting: '早安', message: '清晨的猎物，先捕获最重要的三件事' };
@@ -446,134 +484,161 @@
             return { theme: 'night', greeting: '夜深了', message: '明天的爪子会更锋利，先睡吧' };
         }
 
-        // 更新时间主题
         function updateTimeTheme() {
             const { theme, greeting, message } = getTimeTheme();
             document.body.className = `theme-${theme}`;
             document.getElementById('greeting').textContent = greeting;
             document.getElementById('time-message').textContent = message;
             
-            // 更新时间进度条
             const now = new Date();
-            const hours = now.getHours() + now.getMinutes() / 60;
-            const progress = (hours / 24) * 100;
+            const progress = ((now.getHours() + now.getMinutes() / 60) / 24) * 100;
             document.documentElement.style.setProperty('--time-progress', `${progress}%`);
             
-            // 深夜休息模式
-            const taskList = document.getElementById('task-list');
-            const progressSection = document.getElementById('progress-section');
-            if (theme === 'night') {
-                taskList.style.display = 'none';
-                progressSection.style.display = 'none';
-                document.querySelector('.add-task').style.display = 'none';
-                showRestMode();
-            } else {
-                taskList.style.display = 'block';
-                progressSection.style.display = 'block';
-                document.querySelector('.add-task').style.display = 'block';
-                hideRestMode();
-            }
-        }
-
-        // 显示休息模式
-        function showRestMode() {
+            const isNight = theme === 'night';
+            document.getElementById('task-list').style.display = isNight ? 'none' : 'block';
+            document.getElementById('progress-section').style.display = isNight ? 'none' : 'block';
+            document.querySelector('.add-task').style.display = isNight ? 'none' : 'flex';
+            
             let restDiv = document.getElementById('rest-mode');
-            if (!restDiv) {
+            if (isNight && !restDiv) {
                 restDiv = document.createElement('div');
                 restDiv.id = 'rest-mode';
                 restDiv.className = 'rest-mode';
-                restDiv.innerHTML = `
-                    <div class="moon">🌙</div>
-                    <div class="rest-message">明天的爪子会更锋利</div>
-                    <div class="rest-sub">先休息吧，任务会等着你的</div>
-                `;
-                document.querySelector('.container').insertBefore(restDiv, document.querySelector('.progress-section'));
+                restDiv.innerHTML = `<div class="moon">🌙</div><div class="rest-message">明天的爪子会更锋利</div><div class="rest-sub">先休息吧，任务会等着你的</div>`;
+                document.querySelector('.container').insertBefore(restDiv, document.getElementById('progress-section'));
             }
-            restDiv.style.display = 'block';
+            if (restDiv) restDiv.style.display = isNight ? 'block' : 'none';
         }
 
-        function hideRestMode() {
-            const restDiv = document.getElementById('rest-mode');
-            if (restDiv) restDiv.style.display = 'none';
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            const taskDate = new Date(dateStr);
+            taskDate.setHours(0,0,0,0);
+            
+            const diff = Math.floor((taskDate - today) / (1000 * 60 * 60 * 24));
+            
+            if (diff === 0) return '今天';
+            if (diff === 1) return '明天';
+            if (diff === -1) return '昨天';
+            if (diff < 0) return `${Math.abs(diff)}天前`;
+            if (diff <= 7) return `${diff}天后`;
+            
+            return `${date.getMonth() + 1}月${date.getDate()}日`;
         }
 
-        // 保存任务
+        function isOverdue(dateStr) {
+            if (!dateStr) return false;
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            const taskDate = new Date(dateStr);
+            taskDate.setHours(0,0,0,0);
+            return taskDate < today;
+        }
+
         function saveTasks() {
             localStorage.setItem('claw-tasks', JSON.stringify(tasks));
         }
 
-        // 渲染任务
         function renderTasks() {
             const taskList = document.getElementById('task-list');
-            const pendingTasks = tasks.filter(t => !t.completed);
+            const today = new Date().toISOString().split('T')[0];
+            
+            const todayTasks = tasks.filter(t => t.date === today && !t.completed);
+            const upcomingTasks = tasks.filter(t => t.date && t.date !== today && !t.completed);
+            const noDateTasks = tasks.filter(t => !t.date && !t.completed);
             const completedTasks = tasks.filter(t => t.completed);
             
             let html = '';
             
-            if (pendingTasks.length > 0) {
+            if (todayTasks.length > 0) {
                 html += `<div class="task-section">
-                    <div class="section-title">待完成</div>
-                    ${pendingTasks.map(task => `
-                        <div class="task-item" data-id="${task.id}">
-                            <div class="claw-icon"></div>
-                            <div class="task-text">
-                                ${escapeHtml(task.text)}
-                                <div class="claw-strike"></div>
-                            </div>
-                        </div>
-                    `).join('')}
+                    <div class="section-header">
+                        <span class="section-title">今天</span>
+                        <span class="section-count">${todayTasks.length}</span>
+                    </div>
+                    ${todayTasks.map(t => renderTask(t)).join('')}
+                </div>`;
+            }
+            
+            if (upcomingTasks.length > 0) {
+                const sorted = [...upcomingTasks].sort((a, b) => new Date(a.date) - new Date(b.date));
+                html += `<div class="task-section">
+                    <div class="section-header">
+                        <span class="section-title">即将到来</span>
+                        <span class="section-count">${upcomingTasks.length}</span>
+                    </div>
+                    ${sorted.map(t => renderTask(t)).join('')}
+                </div>`;
+            }
+            
+            if (noDateTasks.length > 0) {
+                html += `<div class="task-section">
+                    <div class="section-header">
+                        <span class="section-title">待安排</span>
+                        <span class="section-count">${noDateTasks.length}</span>
+                    </div>
+                    ${noDateTasks.map(t => renderTask(t)).join('')}
                 </div>`;
             }
             
             if (completedTasks.length > 0) {
                 html += `<div class="task-section">
-                    <div class="section-title">已完成</div>
-                    ${completedTasks.map(task => `
-                        <div class="task-item completed" data-id="${task.id}">
-                            <div class="claw-icon"></div>
-                            <div class="task-text">
-                                ${escapeHtml(task.text)}
-                                <div class="claw-strike"></div>
-                            </div>
-                        </div>
-                    `).join('')}
+                    <div class="section-header">
+                        <span class="section-title">已完成</span>
+                        <span class="section-count">${completedTasks.length}</span>
+                    </div>
+                    ${completedTasks.map(t => renderTask(t)).join('')}
                 </div>`;
             }
             
             if (tasks.length === 0) {
-                html = `<div class="task-section">
-                    <div class="section-title">开始吧</div>
-                    <div class="task-item" style="opacity: 0.5; cursor: default;">
-                        <div class="task-text" style="color: var(--text-muted);">还没有任务，添加一个吧</div>
-                    </div>
-                </div>`;
+                html = `<div class="empty-state">还没有任务，添加一个吧 ✨</div>`;
             }
             
             taskList.innerHTML = html;
             updateProgress();
         }
 
-        // 转义HTML
+        function renderTask(task) {
+            const dateDisplay = task.date ? formatDate(task.date) : '';
+            const overdue = !task.completed && isOverdue(task.date);
+            
+            return `
+                <div class="task-item ${task.completed ? 'completed' : ''}" data-id="${task.id}">
+                    <div class="claw-icon">${task.completed ? '✓' : '○'}</div>
+                    <div class="task-content">
+                        <div class="task-text">
+                            ${escapeHtml(task.text)}
+                            <div class="claw-strike"></div>
+                        </div>
+                        ${dateDisplay ? `<div class="task-date ${overdue ? 'overdue' : ''}">${dateDisplay}</div>` : ''}
+                    </div>
+                    <div class="task-delete" onclick="event.stopPropagation(); deleteTask(${task.id})">×</div>
+                </div>
+            `;
+        }
+
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
-        // 添加任务
-        function addTask(text) {
+        function addTask(text, date) {
             if (!text.trim()) return;
             tasks.unshift({
                 id: Date.now(),
                 text: text.trim(),
                 completed: false,
-                createdAt: new Date().toISOString()
+                date: date || null
             });
             saveTasks();
             renderTasks();
         }
 
-        // 切换完成状态
         function toggleTask(id) {
             const task = tasks.find(t => t.id === id);
             if (task) {
@@ -583,29 +648,31 @@
             }
         }
 
-        // 更新进度
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveTasks();
+            renderTasks();
+        }
+
         function updateProgress() {
-            const total = tasks.length;
-            const completed = tasks.filter(t => t.completed).length;
+            const today = new Date().toISOString().split('T')[0];
+            const todayTasks = tasks.filter(t => t.date === today);
+            const total = todayTasks.length;
+            const completed = todayTasks.filter(t => t.completed).length;
             const percentage = total > 0 ? (completed / total) * 100 : 0;
             
             document.getElementById('progress-count').textContent = `${completed}/${total}`;
             document.getElementById('progress-fill').style.width = `${percentage}%`;
             
-            // 爪印
             const clawPrints = document.getElementById('claw-prints');
             let printsHtml = '';
-            for (let i = 0; i < Math.min(total, 10); i++) {
-                const isActive = i < completed;
-                printsHtml += `<div class="claw-print ${isActive ? 'active' : ''}">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2C9.5 2 7.5 4 7.5 6.5C7.5 7.5 7.8 8.3 8.3 9L6 12L3.5 10.5C3 10.2 2.4 10.4 2.1 10.9C1.8 11.4 2 12 2.5 12.3L5 13.8L4 16.5C3.8 17 4.1 17.6 4.6 17.8C5.1 18 5.7 17.7 5.9 17.2L7 14L9 15L9.5 18.5C9.6 19 10 19.4 10.5 19.4H13.5C14 19.4 14.4 19 14.5 18.5L15 15L17 14L18.1 17.2C18.3 17.7 18.9 18 19.4 17.8C19.9 17.6 20.2 17 20 16.5L19 13.8L21.5 12.3C22 12 22.2 11.4 21.9 10.9C21.6 10.4 21 10.2 20.5 10.5L18 12L15.7 9C16.2 8.3 16.5 7.5 16.5 6.5C16.5 4 14.5 2 12 2Z"/>
-                    </svg>
+            for (let i = 0; i < Math.max(total, 5); i++) {
+                printsHtml += `<div class="claw-print ${i < completed ? 'active' : ''}">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.5 4 7.5 6.5C7.5 7.5 7.8 8.3 8.3 9L6 12L3.5 10.5C3 10.2 2.4 10.4 2.1 10.9C1.8 11.4 2 12 2.5 12.3L5 13.8L4 16.5C3.8 17 4.1 17.6 4.6 17.8C5.1 18 5.7 17.7 5.9 17.2L7 14L9 15L9.5 18.5C9.6 19 10 19.4 10.5 19.4H13.5C14 19.4 14.4 19 14.5 18.5L15 15L17 14L18.1 17.2C18.3 17.7 18.9 18 19.4 17.8C19.9 17.6 20.2 17 20 16.5L19 13.8L21.5 12.3C22 12 22.2 11.4 21.9 10.9C21.6 10.4 21 10.2 20.5 10.5L18 12L15.7 9C16.2 8.3 16.5 7.5 16.5 6.5C16.5 4 14.5 2 12 2Z"/></svg>
                 </div>`;
             }
             clawPrints.innerHTML = printsHtml;
             
-            // 完成鼓励
             const encouragement = document.getElementById('encouragement');
             if (total > 0 && completed === total) {
                 encouragement.classList.add('show');
@@ -617,24 +684,26 @@
         // 事件监听
         document.getElementById('new-task').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                addTask(e.target.value);
+                const date = document.getElementById('task-date').value;
+                addTask(e.target.value, date);
                 e.target.value = '';
+                document.getElementById('task-date').value = '';
             }
         });
 
         document.getElementById('task-list').addEventListener('click', (e) => {
             const taskItem = e.target.closest('.task-item');
-            if (taskItem && !taskItem.classList.contains('completed') || taskItem?.classList.contains('completed')) {
-                const id = parseInt(taskItem.dataset.id);
-                toggleTask(id);
+            if (taskItem && !e.target.classList.contains('task-delete')) {
+                toggleTask(parseInt(taskItem.dataset.id));
             }
         });
+
+        // 设置默认日期为今天
+        document.getElementById('task-date').value = new Date().toISOString().split('T')[0];
 
         // 初始化
         updateTimeTheme();
         renderTasks();
-        
-        // 每分钟更新时间主题
         setInterval(updateTimeTheme, 60000);
     </script>
 </body>
